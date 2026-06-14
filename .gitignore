@@ -1,1 +1,6 @@
- 
+ instance/
+uploads/
+__pycache__/
+resources/__pycache__/
+*.pyc
+*.db
