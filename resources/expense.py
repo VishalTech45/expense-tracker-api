@@ -4,7 +4,10 @@ from flask_jwt_extended import jwt_required , get_jwt_identity
 from models  import db, Expense ,User
 import os 
 from werkzeug.utils import secure_filename
- 
+import redis 
+import json 
+
+r = redis.Redis(host='localhost' ,port = 6379 ,db = 0)
 
 class ExpenseList(Resource):
 
@@ -14,6 +17,16 @@ class ExpenseList(Resource):
         current_user_id = get_jwt_identity()
         current_user = User.query.get(current_user_id)
 
+        # Create a unique cache key per user
+        cache_key = f"expenses_{current_user_id}"
+
+        #Check Redis cache first 
+        cached = r.get(cache_key)
+        if cached:
+            print("Serving from cache!")
+            return {"expenses" : json.loads(cached)} ,200
+        
+        #If no cache , query database 
         if current_user.role == "admin":
             expenses = Expense.query.all()
         else :
@@ -30,6 +43,9 @@ class ExpenseList(Resource):
                  "category":expense.category,
                  "date" : str(expense.date)
              })
+
+        r.set(cache_key , json.dumps(result) , ex=60)   
+        print ("Serving from database!")  
 
         return{"expenses":result} ,200
 

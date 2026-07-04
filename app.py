@@ -6,7 +6,10 @@ from models import db
 from resources.auth import UserRegistration ,UserLogin ,TokenRefresh
 from resources.expense import ExpenseList,ExpenseDetail
 from datetime import timedelta 
- 
+import redis 
+import json
+
+r = redis.Redis(host='localhost' ,port = 6379 , db=0)
 app = Flask(__name__)
 
 #Config
