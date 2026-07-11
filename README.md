@@ -1,4 +1,4 @@
-## Expense Tracker API - backend Service
+# Expense Tracker API - Backend REST Service
 
 A REST API built with Flask for tracking personal expenses.
 
