@@ -1,4 +1,4 @@
-# Expense Tracker API
+# Expense Tracker API - Backend REST Service
 
 A REST API built with Flask for tracking personal expenses.
 
@@ -18,3 +18,7 @@ A REST API built with Flask for tracking personal expenses.
 ## Setup
 pip install -r requirements.txt
 python app.py
+
+
+## Deployment
+This project is deployed on Railway.
