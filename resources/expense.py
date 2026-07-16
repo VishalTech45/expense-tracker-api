@@ -7,8 +7,8 @@ from werkzeug.utils import secure_filename
 import redis 
 import json 
 
-r = redis.Redis(host='localhost' ,port = 6379 ,db = 0)
-
+redis_url=os.environ.get("REDIS_URL","redis://localhost:6379")
+r= redis.from_url(redis_url)
 class ExpenseList(Resource):
 
     @jwt_required()
