@@ -29,7 +29,7 @@ class UserRegistration(Resource):
           db.session.commit()
 
 
-          return {"massage":"User  Added in list"} ,201
+          return {"message":"User Added in list"} ,201
 
 
 class UserLogin(Resource):
