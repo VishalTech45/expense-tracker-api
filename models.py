@@ -9,6 +9,7 @@ class User(db.Model): # db.model -  yeh class ek database table represent karti 
      username = db.Column(db.String(100) , unique  = True ,nullable = False ) #unique= True - do users ka same username nahi ho sakta  
      password = db.Column(db.String(200),nullable = False ) # nullable = False - yeh field empty nahi ho sakti , required hai 
      role = db.Column(db.String(50) ,nullable=False,default="user")
+     email = db.Column(db.String(100), unique=True, nullable=False)
      
 
     # One-to-Many relationship: ek user ke paas multiple expenses ho sakti hain

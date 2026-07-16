@@ -55,10 +55,10 @@ class ExpenseList(Resource):
     def post(self):
         #JWT se current user ka id nikalo
         current_user_id = get_jwt_identity()
-
-        title = request.form.get("title")
-        amount = request.form.get("amount")
-        category = request.form.get("category") 
+        data = request.get_json()
+        title =  data.get("title")
+        amount = data.get("amount")
+        category = data.get("category") 
         
 
         #Validation

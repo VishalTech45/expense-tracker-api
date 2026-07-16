@@ -12,10 +12,11 @@ class UserRegistration(Resource):
           username = data.get("username")
           password = data.get("password")
           role= data.get("role","user") # default will be "user"
+          email = data.get("email")
 
           #Validation
-          if not username or not password:
-               return {"message": "Username and password are  Required "} ,400
+          if not username or not password or not email:
+               return {"message": "Username, email, and password are required"} ,400
           
           # Check! username already exists  or not 
           if User.query.filter_by(username=username).first():
@@ -23,7 +24,7 @@ class UserRegistration(Resource):
           
           #Password hash karo aur user save karo 
           hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-          new_user = User(username = username,password = hashed_password ,role =role)
+          new_user = User(username = username,password = hashed_password ,role =role ,email = email)
           db.session.add(new_user)
           db.session.commit()
 

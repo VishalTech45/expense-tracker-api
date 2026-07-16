@@ -1,3 +1,4 @@
+import dotenv
 from flask import Flask 
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
@@ -8,15 +9,20 @@ from resources.expense import ExpenseList,ExpenseDetail
 from datetime import timedelta 
 import redis 
 import json
+import os 
+ 
+dotenv.load_dotenv()  # Load environment variables from .env file
 
-r = redis.Redis(host='localhost' ,port = 6379 , db=0)
+
+redis_url = os.environ.get("REDIS_URL","redis://localhost:6379")
+r = redis.from_url(redis_url)
 app = Flask(__name__)
 
 #Config
 app.config["JWT_SECRET_KEY"] = "expense-tracker-secret-key"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"]= timedelta(minutes=15)
 app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=7)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///expense_tracker.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL","sqlite:///expense_tracker.db")
 
 # Extensions initialization 
 db.init_app(app)
